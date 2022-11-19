@@ -9,12 +9,12 @@ public class Solution {
     public int solution(int capability, int[] clean, int[] dirty) {
         Arrays.stream(clean).forEach(i -> cleanFrequencies[i - 1]++);
         Arrays.stream(dirty).forEach(i -> dirtyFrequencies[i - 1]++);
-        int count = matchSingleCandidates(capability);
-        if (count < capability) {
-            int pairs = (capability - count) / 2;
-            getPairsFromDirtyPool(pairs);
-        }
-        return Arrays.stream(cleanFrequencies).map(i -> i / 2).sum();
+        int remainingCapability = capability - matchSingleCandidates(capability);
+        return countPairs(cleanFrequencies) + Math.min(countPairs(dirtyFrequencies), remainingCapability / 2);
+    }
+
+    private int countPairs(int[] socks) {
+        return Arrays.stream(socks).map(i -> i / 2).sum();
     }
 
 
@@ -28,15 +28,5 @@ public class Solution {
             }
         }
         return count;
-    }
-
-    private void getPairsFromDirtyPool(int pairs) {
-        int count = 0;
-        for (int index = 0; count < pairs && index < dirtyFrequencies.length; index++) {
-            int possiblePairs = dirtyFrequencies[index] / 2;
-            int increment = Math.min(pairs - count, possiblePairs);
-            count += increment;
-            cleanFrequencies[index] += (increment * 2);
-        }
     }
 }

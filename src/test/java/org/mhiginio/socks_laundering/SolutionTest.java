@@ -38,8 +38,11 @@ class SolutionTest {
                 new TestCaseBuilder().capacity(2)
                         .clean(new int[]{1})
                         .dirty(new int[]{3, 2, 5, 5})
-                        .solution(1).build()
-
+                        .solution(1).build(),
+                new TestCaseBuilder().capacity(3)
+                        .clean(new int[]{1, 1, 2, 3})
+                        .dirty(new int[]{3, 3, 3})
+                        .solution(3).build()
 
 
         );
